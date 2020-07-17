@@ -5,6 +5,7 @@ import Main from '@/components/Main'
 import Discover from '@/components/Discover'
 import Login from '@/components/Login'
 import Register from '@/components/Register'
+import Details from '@/components/Details'
 
 Vue.use(Router)
 
@@ -34,6 +35,11 @@ export default new Router({
       path: '/register',
       name: 'Register',
       component: Register
+    },
+    {
+      path: '/details/:id',
+      name: 'Details',
+      component: Details
     }
   ]
 })
