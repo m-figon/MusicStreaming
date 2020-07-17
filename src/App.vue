@@ -65,6 +65,8 @@ export default {
       } else if (this.$route.path === "/register") {
         this.idEmpty();
         this.registerId = "other";
+      } else {
+        this.idEmpty();
       }
     }
   }

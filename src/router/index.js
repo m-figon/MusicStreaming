@@ -6,6 +6,7 @@ import Discover from '@/components/Discover'
 import Login from '@/components/Login'
 import Register from '@/components/Register'
 import Details from '@/components/Details'
+import Genre from '@/components/Genre'
 
 Vue.use(Router)
 
@@ -25,6 +26,14 @@ export default new Router({
       path: '/discover',
       name: 'Discover',
       component: Discover
+    },
+    {
+      path: '/discover/:type',
+      name: 'Genre',
+      component: Genre,
+      props(route) {
+        return {  props: route.params.type }
+      }
     },
     {
       path: '/login',

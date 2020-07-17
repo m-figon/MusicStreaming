@@ -1,39 +1,26 @@
 <template>
   <div class="main">
     <template v-for="(item,index) of musicArray">
-      <div class="song" v-if="index<endLength && index>=startLength" v-bind:key="index">
+      <div class="song" v-if="item.type===type" v-bind:key="index">
         <div class="text">
           <router-link :to="`/details/${index}`">
-            <h1>Title: {{item.title}}</h1>
-          </router-link>
-          <router-link :to="{ path: `/discover/${item.type}`, params: {type: item.type } }">
+            <h1>{{item.title}}</h1>
             <h1>Genre: {{item.type}}</h1>
           </router-link>
         </div>
         <img v-bind:src="item.img" />
       </div>
     </template>
-    <div class="pages">
-      <h1>Current Page</h1>
-      <select v-on:change="selectChange()" v-model="currentPage">
-        <template v-for="(item,index) of pages">
-          <option v-bind:value="item" v-bind:key="index">{{item}}</option>
-        </template>
-      </select>
-    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "Main",
+  name: "Genre",
   data() {
     return {
       musicArray: [],
-      startLength: 0,
-      endLength: 4,
-      currentPage: 1,
-      pages: []
+      type: ""
     };
   },
   created() {
@@ -51,24 +38,8 @@ export default {
         .then(response => response.json())
         .then(data => {
           this.musicArray = data.slice();
-          console.log(this.musicArray);
-          let pageNumber = 1;
-          for (let i = 0; i < this.musicArray.length; i++) {
-            if (i % 4 === 0) {
-              this.pages.push(pageNumber);
-              pageNumber++;
-            }
-          }
-          console.log(this.pages);
+          this.type=this.$route.params.type;
         });
-    },
-    selectChange() {
-      console.log("select change");
-      console.log(this.currentPage);
-      this.startLength = (this.currentPage - 1) * 4;
-      this.endLength = this.currentPage * 4;
-      console.log(this.startLength);
-      console.log(this.endLength);
     }
   }
 };
@@ -102,7 +73,6 @@ export default {
   flex-direction: column;
   align-items: center;
   margin: 0 0;
-  overflow: hidden;
 }
 .text {
   top: 7rem;
@@ -114,19 +84,15 @@ export default {
   height: 100%;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
-  flex-direction: column;
+  align-items: center;
   background-color: rgba(0, 0, 0, 0.308);
 }
 .song img {
-  margin-top: -11rem;
+  margin-top: -5rem;
   width: 100vw;
 }
 .song h1 {
   font-size: 2rem;
-}
-.song h1:hover {
-  color: #0ff;
 }
 .pages {
   width: 100vw;
