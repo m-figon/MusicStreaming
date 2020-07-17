@@ -17,7 +17,7 @@ export default {
       musicArray: [],
       genres: [],
       imgs: []
-    };
+      };
   },
   created() {
     // fetch the data when the view is created and the data is

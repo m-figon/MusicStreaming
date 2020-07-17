@@ -102,6 +102,9 @@ a {
   color: white;
   border-bottom: 1px solid white;
 }
+.nav-bar h1:hover, .nav-bar h2:hover{
+    text-shadow: 1px 1px #0ff;
+}
 .left,
 .right,
 .middle {

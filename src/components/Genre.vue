@@ -1,7 +1,12 @@
 <template>
   <div class="main">
+    <input v-model="searchVal" />
     <template v-for="(item,index) of musicArray">
-      <div class="song" v-if="item.type===type" v-bind:key="index">
+      <div
+        class="song"
+        v-if="item.type===type && item.title.toLowerCase().includes(searchVal.toLowerCase())"
+        v-bind:key="index"
+      >
         <div class="text">
           <router-link :to="`/details/${index}`">
             <h1>{{item.title}}</h1>
@@ -11,6 +16,7 @@
         <img v-bind:src="item.img" />
       </div>
     </template>
+    <div class="background"></div>
   </div>
 </template>
 
@@ -20,7 +26,8 @@ export default {
   data() {
     return {
       musicArray: [],
-      type: ""
+      type: "",
+      searchVal: ""
     };
   },
   created() {
@@ -38,13 +45,32 @@ export default {
         .then(response => response.json())
         .then(data => {
           this.musicArray = data.slice();
-          this.type=this.$route.params.type;
+          this.type = this.$route.params.type;
         });
     }
   }
 };
 </script>
 <style scoped>
+.background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #000000; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #434343,
+    #000000
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #434343,
+    #000000
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  z-index: -1;
+}
 .main {
   width: 100vw;
   background: #000000; /* fallback for old browsers */
@@ -64,6 +90,14 @@ export default {
   align-items: center;
   color: white;
 }
+.main input {
+  background: black; /* fallback for old browsers */
+  border: 1px solid white;
+  padding: 0 0.5rem;
+  margin: 0.5rem 0;
+  color: white;
+  border-radius: 10px;
+}
 .song {
   width: 100vw;
   border: 2px solid #0ff;
@@ -73,6 +107,7 @@ export default {
   flex-direction: column;
   align-items: center;
   margin: 0 0;
+  overflow: hidden;
 }
 .text {
   top: 7rem;
@@ -88,7 +123,7 @@ export default {
   background-color: rgba(0, 0, 0, 0.308);
 }
 .song img {
-  margin-top: -5rem;
+  margin-top: -11rem;
   width: 100vw;
 }
 .song h1 {

@@ -1,7 +1,12 @@
 <template>
   <div class="main">
+    <input v-model="searchVal" />
     <template v-for="(item,index) of musicArray">
-      <div class="song" v-if="index<endLength && index>=startLength" v-bind:key="index">
+      <div
+        class="song"
+        v-if="(index<endLength && index>=startLength && searchVal==='') || ((item.title.toLowerCase().includes(searchVal.toLowerCase())) && searchVal!=='')"
+        v-bind:key="index"
+      >
         <div class="text">
           <router-link :to="`/details/${index}`">
             <h1>Title: {{item.title}}</h1>
@@ -21,6 +26,7 @@
         </template>
       </select>
     </div>
+    <div class="background"></div>
   </div>
 </template>
 
@@ -33,7 +39,8 @@ export default {
       startLength: 0,
       endLength: 4,
       currentPage: 1,
-      pages: []
+      pages: [],
+      searchVal: ""
     };
   },
   created() {
@@ -74,6 +81,25 @@ export default {
 };
 </script>
 <style scoped>
+.background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #000000; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #434343,
+    #000000
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #434343,
+    #000000
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  z-index: -1;
+}
 .main {
   width: 100vw;
   background: #000000; /* fallback for old browsers */
@@ -92,6 +118,14 @@ export default {
   flex-direction: column;
   align-items: center;
   color: white;
+}
+.main input {
+  background: black; /* fallback for old browsers */
+  border: 1px solid white;
+  padding: 0 0.5rem;
+  margin: 0.5rem 0;
+  color: white;
+  border-radius: 10px;
 }
 .song {
   width: 100vw;
