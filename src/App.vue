@@ -2,14 +2,24 @@
   <div id="app">
     <div class="nav-bar">
       <div class="left">
-        <router-link to="/"><h2>MusicStreaming</h2></router-link>
-        <router-link to="/main"><h1 id="other">Main</h1></router-link>
-        <router-link to="/discover"><h1>Discover</h1></router-link>
+        <router-link to="/">
+          <h2>MusicStreaming</h2>
+        </router-link>
+        <router-link to="/main">
+          <h1 v-bind:id="mainId">Main</h1>
+        </router-link>
+        <router-link to="/discover">
+          <h1 v-bind:id="discoverId">Discover</h1>
+        </router-link>
       </div>
       <div class="middle"></div>
       <div class="right">
-        <router-link to="/login"><h1>Login</h1></router-link>
-        <router-link to="/register"><h1 id="other">Register</h1></router-link>
+        <router-link to="/login">
+          <h1 v-bind:id="loginId">Login</h1>
+        </router-link>
+        <router-link to="/register">
+          <h1 v-bind:id="registerId">Register</h1>
+        </router-link>
       </div>
     </div>
     <router-view />
@@ -19,8 +29,46 @@
 <script>
 export default {
   name: "App",
+  data() {
+    return {
+      mainId: "",
+      discoverId: "",
+      loginId: "",
+      registerId: ""
+    };
+  },
+  created() {
+    this.readUrl();
+  },
+  watch: {
+    $route: "readUrl"
+  },
+  methods: {
+    idEmpty() {
+      this.discoverId = "";
+      this.mainId = "";
+      this.loginId = "";
+      this.registerId = "";
+    },
+    readUrl() {
+      if (this.$route.path === "/") {
+        this.idEmpty();
+      } else if (this.$route.path === "/main") {
+        this.idEmpty();
+        this.mainId = "other";
+      } else if (this.$route.path === "/discover") {
+        this.idEmpty();
+        this.discoverId = "other";
+      } else if (this.$route.path === "/login") {
+        this.idEmpty();
+        this.loginId = "other";
+      } else if (this.$route.path === "/register") {
+        this.idEmpty();
+        this.registerId = "other";
+      }
+    }
+  }
 };
-
 </script>
 
 <style>
@@ -29,9 +77,9 @@ body {
   margin: 0;
   font-family: "Lato", sans-serif;
 }
-a{
+a {
   text-decoration: none;
-  color: white;  
+  color: white;
 }
 .nav-bar {
   width: 100vw;
