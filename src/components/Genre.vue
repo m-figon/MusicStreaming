@@ -12,6 +12,9 @@
             <h1>{{item.title}}</h1>
             <h1>Genre: {{item.type}}</h1>
           </router-link>
+          <div v-if="logedAc!==''" class="button-div">
+            <button v-on:click="addToPlaylist(item.id)"></button>
+          </div>
         </div>
         <img v-bind:src="item.img" />
       </div>
@@ -21,8 +24,11 @@
 </template>
 
 <script>
+import store from "../store";
+
 export default {
   name: "Genre",
+  store,
   data() {
     return {
       musicArray: [],
@@ -46,12 +52,87 @@ export default {
         .then(data => {
           this.musicArray = data.slice();
           this.type = this.$route.params.type;
+          setInterval(() => {
+            this.logedAc = this.$store.state.user.logedUser;
+          }, 1000);
+        });
+    },
+    addToPlaylist(idNum) {
+      fetch("https://rocky-citadel-32862.herokuapp.com/MusicStreaming/users")
+        .then(response => response.json())
+        .then(data => {
+          this.users = data.slice();
+          console.log(this.users);
+          for (let item of this.users) {
+            if (item.account === this.logedAc) {
+              let tmp = item.playlists.slice();
+              tmp.push(this.musicArray[idNum]);
+              console.log(tmp);
+              fetch(
+                "https://rocky-citadel-32862.herokuapp.com/MusicStreaming/users/" +
+                  item.id,
+                {
+                  method: "PUT",
+                  body: JSON.stringify({
+                    email: item.email,
+                    account: item.account,
+                    password: item.password,
+                    playlists: tmp,
+                    id: item.id
+                  }),
+                  headers: {
+                    "Content-type": "application/json; charset=UTF-8"
+                  }
+                }
+              );
+            }
+          }
         });
     }
   }
 };
 </script>
 <style scoped>
+.button-div button {
+  -webkit-clip-path: polygon(
+    0 29%,
+    34% 29%,
+    34% 0,
+    68% 0,
+    68% 28%,
+    100% 28%,
+    100% 71%,
+    68% 70%,
+    68% 100%,
+    33% 100%,
+    33% 70%,
+    1% 70%
+  );
+  clip-path: polygon(
+    0 29%,
+    34% 29%,
+    34% 0,
+    68% 0,
+    68% 28%,
+    100% 28%,
+    100% 71%,
+    68% 70%,
+    68% 100%,
+    33% 100%,
+    33% 70%,
+    1% 70%
+  );
+  margin-left: 95%;
+  margin-top: -3%;
+  background-color: white;
+  border: 0;
+  width: 1rem;
+  height: 1rem;
+}
+.button-div button:hover {
+  background-color: #0ff;
+  cursor: pointer;
+}
 .background {
   position: absolute;
   top: 0;

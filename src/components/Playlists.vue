@@ -1,10 +1,15 @@
 <template>
   <div v-if="user.name!==''" class="main">
     <h2>{{user.account}}'s Playlists</h2>
-    <template v-for="(item,index) of user.playlists" v-if="user.playlists!==[]">
-      <h1 v-bind:key="index">{{item.name}}</h1>
-    </template>
-    <div v-if="user.playlists!==[]" class="info">
+    <div class="songs">
+      <div class="song" v-for="(item,index) of user.playlists" v-if="user.playlists!==[]">
+        <router-link v-bind:to="`/details/${item.id}`">
+          <h1 v-bind:key="index">{{item.title}}</h1>
+        </router-link>
+        <button></button>
+      </div>
+    </div>
+    <div v-if="user.playlists===[]" class="info">
       <h1>There are no playlists</h1>
     </div>
   </div>
@@ -42,6 +47,9 @@ export default {
             }
           }
         });
+    },
+    deleteItem() {
+      console.log("deleted");
     }
   }
 };
@@ -66,6 +74,43 @@ export default {
   flex-direction: column;
   align-items: center;
   color: white;
+}
+.song {
+  display: flex;
+}
+.song button {
+  clip-path: polygon(
+    20% 0%,
+    0% 20%,
+    30% 50%,
+    0% 80%,
+    20% 100%,
+    50% 70%,
+    80% 100%,
+    100% 80%,
+    70% 50%,
+    100% 20%,
+    80% 0%,
+    50% 30%
+  );
+
+  background-color: red;
+  border: 0;
+  width: 1rem;
+  height: 1rem;
+}
+.song button:hover {
+  cursor: pointer;
+}
+.songs {
+  padding: 1rem 1rem;
+  width: 60rem;
+  border: 2px solid white;
+  border-radius: 10px;
+}
+.songs h1:hover {
+  color: #0ff;
+  cursor: pointer;
 }
 .main h2 {
   font-size: 2rem;

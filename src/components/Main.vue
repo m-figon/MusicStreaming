@@ -14,8 +14,8 @@
           <router-link :to="{ path: `/discover/${item.type}`, params: {type: item.type } }">
             <h1>Genre: {{item.type}}</h1>
           </router-link>
-          <div class="button-div">
-          <button></button>
+          <div v-if="logedAc!==''" class="button-div">
+            <button v-on:click="addToPlaylist(item.id)"></button>
           </div>
         </div>
         <img v-bind:src="item.img" />
@@ -34,8 +34,11 @@
 </template>
 
 <script>
+import store from "../store";
+
 export default {
   name: "Main",
+  store,
   data() {
     return {
       musicArray: [],
@@ -43,7 +46,9 @@ export default {
       endLength: 4,
       currentPage: 1,
       pages: [],
-      searchVal: ""
+      searchVal: "",
+      logedAc: "",
+      users: []
     };
   },
   created() {
@@ -62,6 +67,9 @@ export default {
         .then(data => {
           this.musicArray = data.slice();
           console.log(this.musicArray);
+          setInterval(() => {
+            this.logedAc = this.$store.state.user.logedUser;
+          }, 1000);
           let pageNumber = 1;
           for (let i = 0; i < this.musicArray.length; i++) {
             if (i % 4 === 0) {
@@ -71,6 +79,12 @@ export default {
           }
           console.log(this.pages);
         });
+      fetch("https://rocky-citadel-32862.herokuapp.com/MusicStreaming/users")
+        .then(response => response.json())
+        .then(data => {
+          this.users = data.slice();
+          console.log(this.users);
+        });
     },
     selectChange() {
       console.log("select change");
@@ -79,6 +93,38 @@ export default {
       this.endLength = this.currentPage * 4;
       console.log(this.startLength);
       console.log(this.endLength);
+    },
+    addToPlaylist(idNum) {
+      fetch("https://rocky-citadel-32862.herokuapp.com/MusicStreaming/users")
+        .then(response => response.json())
+        .then(data => {
+          this.users = data.slice();
+          console.log(this.users);
+          for (let item of this.users) {
+            if (item.account === this.logedAc) {
+              let tmp = item.playlists.slice();
+              tmp.push(this.musicArray[idNum]);
+              console.log(tmp);
+              fetch(
+                "https://rocky-citadel-32862.herokuapp.com/MusicStreaming/users/" +
+                  item.id,
+                {
+                  method: "PUT",
+                  body: JSON.stringify({
+                    email: item.email,
+                    account: item.account,
+                    password: item.password,
+                    playlists: tmp,
+                    id: item.id
+                  }),
+                  headers: {
+                    "Content-type": "application/json; charset=UTF-8"
+                  }
+                }
+              );
+            }
+          }
+        });
     }
   }
 };
@@ -155,10 +201,10 @@ export default {
   flex-direction: column;
   background-color: rgba(0, 0, 0, 0.308);
 }
-.button-div{
+.button-div {
   position: relative;
-  width:100%;
-  top:-10rem;
+  width: 100%;
+  top: -10rem;
 }
 .button-div button {
   -webkit-clip-path: polygon(
@@ -190,15 +236,15 @@ export default {
     1% 70%
   );
   margin-left: 95%;
-  margin-top:-3%;
+  margin-top: -3%;
   background-color: white;
   border: 0;
   width: 1rem;
   height: 1rem;
 }
-.button-div button:hover{
-    background-color: #0ff;
-    cursor: pointer;
+.button-div button:hover {
+  background-color: #0ff;
+  cursor: pointer;
 }
 .song img {
   margin-top: -11rem;
