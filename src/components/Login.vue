@@ -4,14 +4,16 @@
       <div class="login-content">
         <input
           v-model="account"
-          v-on:focus="focusFunc('Account Name',$event)"
-          v-on:blur="blurFunc('Account Name',$event)"
+          type="text"
+          v-on:focus="focusFunc('Account Name',$event,false)"
+          v-on:blur="blurFunc('Account Name',$event,false)"
         />
+        <p v-show="loginShow">Invalid login data</p>
         <input
           v-model="password"
           v-bind:type="type"
-          v-on:focus="focusFunc('Password',$event)"
-          v-on:blur="blurFunc('Password',$event)"
+          v-on:focus="focusFunc('Password',$event,true)"
+          v-on:blur="blurFunc('Password',$event,true)"
         />
         <button v-on:click="login()">LOGIN</button>
       </div>
@@ -27,7 +29,8 @@ export default {
       account: "Account Name",
       password: "Password",
       users: [],
-      type: "text"
+      type: "text",
+      loginShow: false
     };
   },
   created() {
@@ -40,18 +43,19 @@ export default {
     $route: "fetchData"
   },
   methods: {
-    focusFunc(text, event) {
+    focusFunc(text, event, condition) {
+      console.log(event.target.value);
       if (event.target.value === text) {
         event.target.value = "";
-      }
-      if (text === "Password") {
-        this.type = "password";
+        if (condition) {
+          this.type = "password";
+        }
       }
     },
-    blurFunc(text, event) {
+    blurFunc(text, event, condition) {
       if (event.target.value === "") {
         event.target.value = text;
-        if (text === "Password") {
+        if (condition) {
           this.type = "text";
         }
       }
@@ -65,13 +69,19 @@ export default {
         });
     },
     login() {
+      let loginFlag = false;
       for (let item of this.users) {
         if (item.account === this.account && item.password === this.password) {
           this.account = "Account Name";
           this.password = "Password";
           this.type = "text";
+          loginFlag = true;
+          this.loginShow = false;
           alert("you loged");
         }
+      }
+      if (!loginFlag) {
+        this.loginShow = true;
       }
     }
   }
@@ -116,6 +126,10 @@ export default {
   justify-content: center;
   flex-direction: column;
   align-items: flex-start;
+}
+.login-content p {
+  color: red;
+  margin: 0;
 }
 .login-content input {
   width: 100%;
