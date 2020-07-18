@@ -22,8 +22,11 @@
 </template>
 
 <script>
+import store from "../store";
+
 export default {
   name: "Login",
+  store,
   data() {
     return {
       account: "Account Name",
@@ -72,6 +75,7 @@ export default {
       let loginFlag = false;
       for (let item of this.users) {
         if (item.account === this.account && item.password === this.password) {
+          this.$store.commit("changeName", this.account);
           this.account = "Account Name";
           this.password = "Password";
           this.type = "text";

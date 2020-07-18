@@ -132,7 +132,8 @@ export default {
             body: JSON.stringify({
               email: this.email,
               account: this.account,
-              password: this.password
+              password: this.password,
+              playlists: []
             }),
             headers: {
               "Content-type": "application/json; charset=UTF-8"

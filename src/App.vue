@@ -11,9 +11,14 @@
         <router-link to="/discover">
           <h1 v-bind:id="discoverId">Discover</h1>
         </router-link>
+        <router-link to="/playlists">
+          <h1 v-if="logedAc!==''" v-bind:id="playlistId">Playlists</h1>
+        </router-link>
       </div>
       <div class="middle"></div>
       <div class="right">
+        <h1>{{logedAc}}</h1>
+        <h1 v-on:click="logout()" v-if="logedAc!==''">Logout</h1>
         <router-link to="/login">
           <h1 v-bind:id="loginId">Login</h1>
         </router-link>
@@ -27,18 +32,24 @@
 </template>
 
 <script>
+import store from "./store";
+
 export default {
   name: "App",
+  store,
   data() {
     return {
       mainId: "",
       discoverId: "",
       loginId: "",
-      registerId: ""
+      registerId: "",
+      logedAc: "",
+      playlistId: ""
     };
   },
   created() {
     this.readUrl();
+    this.userState();
   },
   watch: {
     $route: "readUrl"
@@ -49,6 +60,7 @@ export default {
       this.mainId = "";
       this.loginId = "";
       this.registerId = "";
+      this.playlistId = "";
     },
     readUrl() {
       if (this.$route.path === "/") {
@@ -65,9 +77,20 @@ export default {
       } else if (this.$route.path === "/register") {
         this.idEmpty();
         this.registerId = "other";
+      } else if (this.$route.path === "/playlists") {
+        this.idEmpty();
+        this.playlistId = "other";
       } else {
         this.idEmpty();
       }
+    },
+    userState() {
+      setInterval(() => {
+        this.logedAc = this.$store.state.user.logedUser;
+      }, 1000);
+    },
+    logout() {
+      this.$store.commit("changeName", "");
     }
   }
 };
@@ -102,8 +125,10 @@ a {
   color: white;
   border-bottom: 1px solid white;
 }
-.nav-bar h1:hover, .nav-bar h2:hover{
-    text-shadow: 1px 1px #0ff;
+.nav-bar h1:hover,
+.nav-bar h2:hover {
+  text-shadow: 1px 1px #0ff;
+  cursor: pointer;
 }
 .left,
 .right,

@@ -14,6 +14,9 @@
           <router-link :to="{ path: `/discover/${item.type}`, params: {type: item.type } }">
             <h1>Genre: {{item.type}}</h1>
           </router-link>
+          <div class="button-div">
+          <button></button>
+          </div>
         </div>
         <img v-bind:src="item.img" />
       </div>
@@ -151,6 +154,51 @@ export default {
   align-items: flex-start;
   flex-direction: column;
   background-color: rgba(0, 0, 0, 0.308);
+}
+.button-div{
+  position: relative;
+  width:100%;
+  top:-10rem;
+}
+.button-div button {
+  -webkit-clip-path: polygon(
+    0 29%,
+    34% 29%,
+    34% 0,
+    68% 0,
+    68% 28%,
+    100% 28%,
+    100% 71%,
+    68% 70%,
+    68% 100%,
+    33% 100%,
+    33% 70%,
+    1% 70%
+  );
+  clip-path: polygon(
+    0 29%,
+    34% 29%,
+    34% 0,
+    68% 0,
+    68% 28%,
+    100% 28%,
+    100% 71%,
+    68% 70%,
+    68% 100%,
+    33% 100%,
+    33% 70%,
+    1% 70%
+  );
+  margin-left: 95%;
+  margin-top:-3%;
+  background-color: white;
+  border: 0;
+  width: 1rem;
+  height: 1rem;
+}
+.button-div button:hover{
+    background-color: #0ff;
+    cursor: pointer;
 }
 .song img {
   margin-top: -11rem;
