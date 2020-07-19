@@ -2,7 +2,9 @@
   <div class="discover">
     <div class="genres">
       <div class="genre" v-for="(item,index) of genres">
-        <router-link :to="{ path: `/discover/${item.name}`, params: {type: item.name } }"><h1 v-bind:key="index">{{item.name}}</h1></router-link>
+        <router-link :to="{ path: `/discover/${item.name}`, params: {type: item.name } }">
+          <h1 v-bind:key="index">{{item.name}}</h1>
+        </router-link>
         <img v-bind:key="index" v-bind:src="item.img" />
       </div>
     </div>
@@ -17,7 +19,7 @@ export default {
       musicArray: [],
       genres: [],
       imgs: []
-      };
+    };
   },
   created() {
     // fetch the data when the view is created and the data is
@@ -58,6 +60,7 @@ export default {
 <style scoped>
 .discover {
   width: 100vw;
+  height: calc(100vh - 5rem);
   background: #000000; /* fallback for old browsers */
   background: -webkit-linear-gradient(
     to right,
@@ -75,11 +78,11 @@ export default {
 }
 .genres {
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: auto auto auto;
 }
 .genre {
-  width: 30rem;
-  height: 20rem;
+  width: 20rem;
+  height: 15rem;
   margin: 2rem 2rem;
   border: 2px solid white;
   border-radius: 10px;
@@ -96,5 +99,42 @@ export default {
 }
 .genre img {
   width: 100%;
+}
+@media only screen and (max-width: 1300px) {
+  .genre {
+    width: 15rem;
+    height: 12rem;
+  }
+  .genre h1 {
+    font-size: 1.2rem;
+  }
+}
+@media only screen and (max-width: 1000px) {
+  .genres {
+    grid-template-columns: auto auto;
+  }
+  .genre {
+    width: 12rem;
+    height: 10rem;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .genre {
+    width: 10rem;
+    height: 7rem;
+    margin: 0.5rem 0.5rem;
+  }
+  .genre h1 {
+    font-size: 1rem;
+  }
+}
+@media only screen and (max-width: 450px) {
+  .genre {
+    width: 8rem;
+    height: 6rem;
+  }
+  .genre h1 {
+    font-size: 0.8rem;
+  }
 }
 </style>

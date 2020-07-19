@@ -3,7 +3,7 @@
     <template v-for="(item,index) of musicArray">
       <div class="song" v-if="index==idVal" v-bind:key="index">
         <h1>{{item.title}}</h1>
-        <iframe width="840" height="630" v-bind:src="item.link"></iframe>
+        <iframe v-bind:src="item.link"></iframe>
       </div>
     </template>
   </div>
@@ -65,9 +65,15 @@ export default {
   align-items: center;
   color: white;
 }
+iframe{
+  width:50rem;
+  height:35rem;
+}
 .song {
-  width: 100%;
-  height: 100%;
+  width: auto;
+  height: auto;
+  padding:0rem 1rem;
+  padding-bottom: 1rem;
   border: 2px solid #0ff;
   border-radius: 10px;
   display: flex;
@@ -78,5 +84,33 @@ export default {
 }
 .song h1 {
   font-size: 2rem;
+  margin: 2rem 0;
+}
+@media only screen and (max-width: 1050px) {
+  .song h1 {
+  font-size: 1.5rem;
+}
+  iframe{
+  width:35rem;
+  height:23rem;
+}
+}
+@media only screen and (max-width: 700px) {
+  .song h1 {
+  font-size: 1.2rem;
+}
+  iframe{
+  width:25rem;
+  height:15rem;
+}
+}
+@media only screen and (max-width: 500px) {
+    .song h1 {
+  font-size: 1.0rem;
+}
+  iframe{
+  width:16rem;
+  height:10rem;
+}
 }
 </style>

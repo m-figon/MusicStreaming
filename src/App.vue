@@ -3,7 +3,10 @@
     <div class="nav-bar">
       <div class="left">
         <router-link to="/">
-          <h2>MusicStreaming</h2>
+          <h2 id="full-name">MusicStreaming</h2>
+        </router-link>
+        <router-link to="/">
+          <h2 id="initials">MS</h2>
         </router-link>
         <router-link to="/main">
           <h1 v-bind:id="mainId">Main</h1>
@@ -113,6 +116,9 @@ a {
   text-decoration: none;
   color: white;
 }
+#initials{
+  display: none;
+}
 .nav-bar {
   width: 100vw;
   height: 5rem;
@@ -155,5 +161,46 @@ a {
 .nav-bar h2 {
   font-size: 1.5rem;
   margin: 0 1rem;
+}
+@media only screen and (max-width: 1400px) {
+  .left {
+    width: 50%;
+  }
+  .middle {
+    display: none;
+  }
+  .right {
+    width: 50%;
+  }
+}
+@media only screen and (max-width: 950px) {
+  .nav-bar h1 {
+    font-size: 1rem;
+    margin: 0 0.3rem;
+  }
+  .nav-bar h2 {
+    font-size: 1.2rem;
+    margin: 0 0.3rem;
+  }
+}
+@media only screen and (max-width: 700px) {
+
+  .nav-bar h1 {
+    font-size: 0.7rem;
+    margin: 0 0.2rem;
+  }
+  .left,.right{
+    width: auto;
+  }
+  #full-name{
+    display: none;
+  }
+  #initials{
+    display: block;
+  }
+  .nav-bar h2 {
+    font-size: 0.9rem;
+    margin: 0 0.2rem;
+  }
 }
 </style>

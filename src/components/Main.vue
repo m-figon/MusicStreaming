@@ -200,6 +200,7 @@ export default {
   align-items: flex-start;
   flex-direction: column;
   background-color: rgba(0, 0, 0, 0.308);
+  padding:0 2rem;
 }
 .button-div {
   position: relative;
@@ -285,5 +286,78 @@ export default {
   margin-left: 1rem;
   width: 3rem;
   height: 1.5rem;
+}
+@media only screen and (max-width: 1500px) {
+  .text {
+  width: 30rem;
+}
+.text h1{
+  font-size: 1.5rem;
+}
+.button-div {
+  top: -7rem;
+}
+} 
+@media only screen and (max-width: 1150px) {
+  .text {
+    top:2rem;
+  width: 20rem;
+}
+.text h1{
+  font-size: 1.2rem;
+}
+.button-div {
+  top: -6.5rem;
+}
+} 
+@media only screen and (max-width: 950px) {
+  .text {
+  width: 10rem;
+  padding: 0 1rem;
+}
+.text h1{
+  font-size: 0.8rem;
+}
+.button-div {
+  top: -5rem;
+}
+} 
+@media only screen and (max-width: 750px) {
+  .text {
+  top:6rem;
+  left:-10rem;
+  }
+}
+@media only screen and (max-width: 750px) {
+  .text h1{
+  font-size: 0.7rem;
+}
+.button-div {
+  top: -3rem;
+}
+  .text {
+  left:-5rem;
+  width:15rem;
+  height:5rem;
+  }
+  .pages h1{
+    font-size: 1rem;
+  }
+  .pages select{
+    width:2rem;
+  }
+}
+@media only screen and (max-width: 550px) {
+
+  .text {
+  top:3rem;
+  left:0rem;
+  }
+}
+@media only screen and (max-width: 400px) {
+
+  .text {
+  top:1rem;
+  }
 }
 </style>
