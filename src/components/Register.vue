@@ -56,24 +56,52 @@ export default {
   },
   methods: {
     focusFunc(text, event, condition) {
-      console.log(event.target.value);
-      if (event.target.value === text) {
-        event.target.value = "";
-        if (condition===1) {
-          this.type = "password";
-        }else if (condition===2) {
-          this.type2 = "password";
-        }
+      if (text === "Account Name" && this.account === "Account Name") {
+        this.account = "";
+      }
+      if (text === "Password" && this.password === "Password") {
+        this.password = "";
+      }
+      if (
+        text === "Confirm Password" &&
+        this.password2 === "Confirm Password"
+      ) {
+        this.password2 = "";
+      }
+      if (text === "Email Address" && this.email === "Email Address") {
+        this.email = "";
+      }
+      if (condition === 1) {
+        this.type = "password";
+      }
+      if (condition === 2) {
+        this.type2 = "password";
       }
     },
-    blurFunc(text, event, condition) {
-      if (event.target.value === "") {
-        event.target.value = text;
-        if (condition===1) {
+    bluring(condition){
+      if (condition === 1) {
           this.type = "text";
-        }else if (condition===2) {
+        }
+        if (condition === 2) {
           this.type2 = "text";
         }
+    },
+    blurFunc(text, event, condition) {
+      if (text === "Account Name" && this.account === "") {
+        this.account = text;
+        this.bluring(condition);
+      }
+      if (text === "Password" && this.password === "") {
+        this.password = text;
+        this.bluring(condition);
+      }
+      if (text === "Confirm Password" && this.password2 === "") {
+        this.password2 = text;
+        this.bluring(condition);
+      }
+      if (text === "Email Address" && this.email === "") {
+        this.email = text;
+        this.bluring(condition);
       }
     },
     register() {

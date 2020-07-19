@@ -47,17 +47,25 @@ export default {
   },
   methods: {
     focusFunc(text, event, condition) {
-      console.log(event.target.value);
-      if (event.target.value === text) {
-        event.target.value = "";
-        if (condition) {
-          this.type = "password";
-        }
+      if (text === "Account Name" && this.account === "Account Name") {
+        this.account = "";
+      }
+      if (text === "Password" && this.password === "Password") {
+        this.password = "";
+      }
+      if (condition) {
+        this.type = "password";
       }
     },
     blurFunc(text, event, condition) {
-      if (event.target.value === "") {
-        event.target.value = text;
+      if (text === "Account Name" && this.account === "") {
+        this.account = text;
+        if (condition) {
+          this.type = "text";
+        }
+      }
+      if (text === "Password" && this.password === "") {
+        this.password = text;
         if (condition) {
           this.type = "text";
         }
@@ -76,11 +84,11 @@ export default {
       for (let item of this.users) {
         if (item.account === this.account && item.password === this.password) {
           this.$store.commit("changeName", this.account);
+          loginFlag = true;
+          this.loginShow = false;
           this.account = "Account Name";
           this.password = "Password";
           this.type = "text";
-          loginFlag = true;
-          this.loginShow = false;
           alert("you loged");
         }
       }
