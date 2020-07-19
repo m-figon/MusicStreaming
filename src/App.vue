@@ -17,7 +17,9 @@
       </div>
       <div class="middle"></div>
       <div class="right">
-        <h1>{{logedAc}}</h1>
+        <router-link to="/settings">
+          <h1 v-if="logedAc!==''" v-bind:id="settingsId">{{logedAc}}</h1>
+        </router-link>
         <h1 v-on:click="logout()" v-if="logedAc!==''">Logout</h1>
         <router-link to="/login">
           <h1 v-bind:id="loginId">Login</h1>
@@ -44,7 +46,8 @@ export default {
       loginId: "",
       registerId: "",
       logedAc: "",
-      playlistId: ""
+      playlistId: "",
+      settingsId: ""
     };
   },
   created() {
@@ -61,6 +64,7 @@ export default {
       this.loginId = "";
       this.registerId = "";
       this.playlistId = "";
+      this.settingsId = "";
     },
     readUrl() {
       if (this.$route.path === "/") {
@@ -80,6 +84,9 @@ export default {
       } else if (this.$route.path === "/playlists") {
         this.idEmpty();
         this.playlistId = "other";
+      } else if (this.$route.path === "/settings") {
+        this.idEmpty();
+        this.settingsId = "other";
       } else {
         this.idEmpty();
       }

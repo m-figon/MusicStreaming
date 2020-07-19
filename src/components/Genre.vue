@@ -4,7 +4,7 @@
     <template v-for="(item,index) of musicArray">
       <div
         class="song"
-        v-if="item.type===type && item.title.toLowerCase().includes(searchVal.toLowerCase())"
+        v-if="(index<endLength && index>=startLength && searchVal==='') || ((item.title.toLowerCase().includes(searchVal.toLowerCase())) && searchVal!=='')"
         v-bind:key="index"
       >
         <div class="text">
@@ -19,6 +19,14 @@
         <img v-bind:src="item.img" />
       </div>
     </template>
+    <div class="pages">
+      <h1>Current Page</h1>
+      <select v-on:change="selectChange()" v-model="currentPage">
+        <template v-for="(item,index) of pages">
+          <option v-bind:value="item" v-bind:key="index">{{item}}</option>
+        </template>
+      </select>
+    </div>
     <div class="background"></div>
   </div>
 </template>
@@ -33,6 +41,10 @@ export default {
     return {
       musicArray: [],
       type: "",
+      startLength: 0,
+      endLength: 4,
+      currentPage: 1,
+      pages: [],
       searchVal: ""
     };
   },
@@ -50,12 +62,35 @@ export default {
       fetch("https://rocky-citadel-32862.herokuapp.com/MusicStreaming/music")
         .then(response => response.json())
         .then(data => {
-          this.musicArray = data.slice();
+          let tmp = data.slice();
           this.type = this.$route.params.type;
+          for(let item of tmp){
+            if(item.type===this.type){
+              this.musicArray.push(item);
+            }
+          }
+          console.log(this.musicArray);
+          console.log(this.type);
           setInterval(() => {
             this.logedAc = this.$store.state.user.logedUser;
           }, 1000);
+          let pageNumber = 1;
+          for (let i = 0; i < this.musicArray.length; i++) {
+            if (i % 4 === 0) {
+              this.pages.push(pageNumber);
+              pageNumber++;
+            }
+          }
+          console.log(this.pages);
         });
+    },
+    selectChange() {
+      console.log("select change");
+      console.log(this.currentPage);
+      this.startLength = (this.currentPage - 1) * 4;
+      this.endLength = this.currentPage * 4;
+      console.log(this.startLength);
+      console.log(this.endLength);
     },
     addToPlaylist(idNum) {
       fetch("https://rocky-citadel-32862.herokuapp.com/MusicStreaming/users")

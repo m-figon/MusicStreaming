@@ -147,17 +147,7 @@ export default {
   width: 100%;
   height: 2rem;
   padding-left: 0.5rem;
-  background: #000000; /* fallback for old browsers */
-  background: -webkit-linear-gradient(
-    to right,
-    #434343,
-    #000000
-  ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(
-    to right,
-    #434343,
-    #000000
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: #0000007e; /* fallback for old browsers */
   border-radius: 5px;
   margin: 1rem 0;
   color: white;
