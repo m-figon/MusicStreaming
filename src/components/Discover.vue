@@ -8,6 +8,9 @@
         <img v-bind:key="index" v-bind:src="item.img" />
       </div>
     </div>
+    <div v-if="!loaded" class="loading">
+      <img src="../assets/load.gif" />
+    </div>
   </div>
 </template>
 
@@ -18,7 +21,8 @@ export default {
     return {
       musicArray: [],
       genres: [],
-      imgs: []
+      imgs: [],
+      loaded: false
     };
   },
   created() {
@@ -52,6 +56,7 @@ export default {
             }
           }
           console.log(this.genres);
+          this.loaded=true;
         });
     }
   }
@@ -100,6 +105,32 @@ export default {
 .genre img {
   width: 100%;
 }
+.loading {
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 6;
+  background: #000000; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #434343,
+    #000000
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #434343,
+    #000000
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+.loading img {
+  height: 3rem;
+  width: 3rem;
+}
 @media only screen and (max-width: 1300px) {
   .genre {
     width: 15rem;
@@ -110,15 +141,15 @@ export default {
   }
 }
 @media only screen and (max-width: 1000px) {
-  .genres {
-    grid-template-columns: auto auto;
-  }
   .genre {
     width: 12rem;
     height: 10rem;
   }
 }
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 800px) {
+  .genres {
+    grid-template-columns: auto auto;
+  }
   .genre {
     width: 10rem;
     height: 7rem;

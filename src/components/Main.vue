@@ -29,7 +29,13 @@
         </template>
       </select>
     </div>
+    <div v-if="!loaded" class="loading">
+      <img src="../assets/load.gif" />
+    </div>
     <div class="background"></div>
+    <div v-if="!loaded" class="loading">
+      <img src="../assets/load.gif" />
+    </div>
   </div>
 </template>
 
@@ -48,7 +54,8 @@ export default {
       pages: [],
       searchVal: "",
       logedAc: "",
-      users: []
+      users: [],
+      loaded: false
     };
   },
   created() {
@@ -78,6 +85,7 @@ export default {
             }
           }
           console.log(this.pages);
+          this.loaded = true;
         });
       fetch("https://rocky-citadel-32862.herokuapp.com/MusicStreaming/users")
         .then(response => response.json())
@@ -200,7 +208,7 @@ export default {
   align-items: flex-start;
   flex-direction: column;
   background-color: rgba(0, 0, 0, 0.308);
-  padding:0 2rem;
+  padding: 0 2rem;
 }
 .button-div {
   position: relative;
@@ -289,75 +297,99 @@ export default {
 }
 @media only screen and (max-width: 1500px) {
   .text {
-  width: 30rem;
+    width: 30rem;
+  }
+  .text h1 {
+    font-size: 1.5rem;
+  }
+  .button-div {
+    top: -7rem;
+  }
 }
-.text h1{
-  font-size: 1.5rem;
-}
-.button-div {
-  top: -7rem;
-}
-} 
 @media only screen and (max-width: 1150px) {
   .text {
-    top:2rem;
-  width: 20rem;
+    top: 2rem;
+    width: 20rem;
+  }
+  .text h1 {
+    font-size: 1.2rem;
+  }
+  .button-div {
+    top: -6.5rem;
+  }
 }
-.text h1{
-  font-size: 1.2rem;
-}
-.button-div {
-  top: -6.5rem;
-}
-} 
 @media only screen and (max-width: 950px) {
   .text {
-  width: 10rem;
-  padding: 0 1rem;
-}
-.text h1{
-  font-size: 0.8rem;
-}
-.button-div {
-  top: -5rem;
-}
-} 
-@media only screen and (max-width: 750px) {
-  .text {
-  top:6rem;
-  left:-10rem;
+    width: 10rem;
+    padding: 0 1rem;
+  }
+  .text h1 {
+    font-size: 0.8rem;
+  }
+  .button-div {
+    top: -5rem;
   }
 }
 @media only screen and (max-width: 750px) {
-  .text h1{
-  font-size: 0.7rem;
-}
-.button-div {
-  top: -3rem;
-}
   .text {
-  left:-5rem;
-  width:15rem;
-  height:5rem;
+    top: 6rem;
+    left: -10rem;
   }
-  .pages h1{
+}
+@media only screen and (max-width: 750px) {
+  .text h1 {
+    font-size: 0.7rem;
+  }
+  .button-div {
+    top: -3rem;
+  }
+  .text {
+    left: -5rem;
+    width: 15rem;
+    height: 5rem;
+  }
+  .pages h1 {
     font-size: 1rem;
   }
-  .pages select{
-    width:2rem;
+  .pages select {
+    width: 2rem;
   }
 }
+.loading {
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 6;
+  background: #000000; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #434343,
+    #000000
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #434343,
+    #000000
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+.loading img {
+  height: 3rem;
+  width: 3rem;
+}
 @media only screen and (max-width: 550px) {
-
   .text {
-  top:3rem;
-  left:0rem;
+    top: 3rem;
+    left: 0rem;
   }
 }
 @media only screen and (max-width: 400px) {
-
   .text {
-  top:1rem;
+    top: 1rem;
   }
 }
 </style>

@@ -6,6 +6,9 @@
         <iframe v-bind:src="item.link"></iframe>
       </div>
     </template>
+    <div v-if="!loaded" class="loading">
+      <img src="../assets/load.gif" />
+    </div>
   </div>
 </template>
 
@@ -15,7 +18,8 @@ export default {
   data() {
     return {
       musicArray: [],
-      idVal: 0
+      idVal: 0,
+      loaded: false
     };
   },
   created() {
@@ -27,6 +31,11 @@ export default {
   watch: {
     // call again the method if the route changes
     $route: "fetchData"
+  },
+  beforeUpdate: function() {
+    this.$nextTick(function() {
+      this.loaded = true;
+    });
   },
   methods: {
     fetchData() {
@@ -65,14 +74,14 @@ export default {
   align-items: center;
   color: white;
 }
-iframe{
-  width:50rem;
-  height:35rem;
+iframe {
+  width: 50rem;
+  height: 35rem;
 }
 .song {
   width: auto;
   height: auto;
-  padding:0rem 1rem;
+  padding: 0rem 1rem;
   padding-bottom: 1rem;
   border: 2px solid #0ff;
   border-radius: 10px;
@@ -86,31 +95,57 @@ iframe{
   font-size: 2rem;
   margin: 2rem 0;
 }
+.loading {
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 6;
+  background: #000000; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #434343,
+    #000000
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #434343,
+    #000000
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+.loading img {
+  height: 3rem;
+  width: 3rem;
+}
 @media only screen and (max-width: 1050px) {
   .song h1 {
-  font-size: 1.5rem;
-}
-  iframe{
-  width:35rem;
-  height:23rem;
-}
+    font-size: 1.5rem;
+  }
+  iframe {
+    width: 35rem;
+    height: 23rem;
+  }
 }
 @media only screen and (max-width: 700px) {
   .song h1 {
-  font-size: 1.2rem;
-}
-  iframe{
-  width:25rem;
-  height:15rem;
-}
+    font-size: 1.2rem;
+  }
+  iframe {
+    width: 25rem;
+    height: 15rem;
+  }
 }
 @media only screen and (max-width: 500px) {
-    .song h1 {
-  font-size: 1.0rem;
-}
-  iframe{
-  width:16rem;
-  height:10rem;
-}
+  .song h1 {
+    font-size: 1rem;
+  }
+  iframe {
+    width: 16rem;
+    height: 10rem;
+  }
 }
 </style>

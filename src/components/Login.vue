@@ -18,6 +18,9 @@
         <button v-on:click="login()">LOGIN</button>
       </div>
     </div>
+    <div v-if="!loaded" class="loading">
+      <img src="../assets/load.gif" />
+    </div>
   </div>
 </template>
 
@@ -33,7 +36,8 @@ export default {
       password: "Password",
       users: [],
       type: "text",
-      loginShow: false
+      loginShow: false,
+      loaded: false
     };
   },
   created() {
@@ -44,6 +48,11 @@ export default {
   watch: {
     // call again the method if the route changes
     $route: "fetchData"
+  },
+  mounted: function() {
+    this.$nextTick(function() {
+      this.loaded = true;
+    });
   },
   methods: {
     focusFunc(text, event, condition) {
@@ -174,5 +183,42 @@ export default {
 .login-content button:hover {
   text-shadow: 1px 1px #0ff;
   cursor: pointer;
+}
+.loading {
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 6;
+  background: #000000; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #434343,
+    #000000
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #434343,
+    #000000
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+.loading img {
+  height: 3rem;
+  width: 3rem;
+}
+@media only screen and (max-width: 700px) {
+  .login-form {
+    width: 15rem;
+  }
+  .login-content input {
+    font-size: 0.8rem;
+  }
+  .login-content {
+    width: 70%;
+  }
 }
 </style>

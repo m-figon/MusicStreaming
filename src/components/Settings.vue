@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div v-if="user" class="register" >
-      <div class="register-form">
-        <div class="register-content">
+    <div v-if="user" class="settings" >
+      <div class="settings-form">
+        <div class="settings-content">
           <div class="one-line">
             <h1>Account Name</h1>
             <input v-model="account" type="text" />
@@ -31,9 +31,13 @@
         </div>
       </div>
     </div>
-    <div class="register" v-else>
+    <div class="settings" v-else>
       <h2>You are not logged</h2>
     </div>
+    <div v-if="!loaded" class="loading">
+      <img src="../assets/load.gif" />
+    </div>
+    
   </div>
 </template>
 
@@ -47,7 +51,8 @@ export default {
       account: "",
       email: "",
       password: "",
-      password2: ""
+      password2: "",
+      loaded: false
     };
   },
   created() {
@@ -74,6 +79,7 @@ export default {
               this.email = this.user.email;
             }
           }
+          this.loaded=true;
         });
     },
     changeData(type) {
@@ -191,7 +197,7 @@ export default {
 };
 </script>
 <style scoped>
-.register {
+.settings {
   width: 100vw;
   height: calc(100vh - 8rem);
   padding-top: 3rem;
@@ -210,13 +216,13 @@ export default {
   justify-content: center;
   align-items: flex-start;
 }
-.register h2{
+.settings h2{
   color:white;
   font-size: 2rem;
 }
-.register-form {
-  width: 40rem;
-  height: 30rem;
+.settings-form {
+  width: 30rem;
+  height: 27rem;
   background: url("../assets/background2.jpg");
   background-size: 100% 100%;
   border-radius: 10px;
@@ -228,21 +234,21 @@ export default {
 .one-line {
   display: flex;
   align-items: center;
-  width: 25rem;
+  width: 100%;
 }
 .button-line {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  width: 25rem;
+  width: 100%;
 }
 .one-line h1 {
   color: #0ff;
   font-size: 1rem;
-  width: 15rem;
+  width: 50%;
 }
-.register-content {
-  width: 60%;
+.settings-content {
+  width: 80%;
   height: 100%;
   background-size: 100% 100%;
   display: flex;
@@ -250,11 +256,7 @@ export default {
   flex-direction: column;
   align-items: flex-start;
 }
-.register-content p {
-  color: red;
-  margin: 0;
-}
-.register-content input {
+.settings-content input {
   width: 100%;
   height: 2rem;
   padding-left: 0.5rem;
@@ -264,7 +266,7 @@ export default {
   color: white;
   border: 1px solid white;
 }
-.register-content button {
+.settings-content button {
   margin-top: 0.5rem;
   padding: 0.5rem 0.5rem;
   color: white;
@@ -282,8 +284,47 @@ export default {
     #000000
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
-.register-content button:hover {
+.settings-content button:hover {
   text-shadow: 1px 1px #0ff;
   cursor: pointer;
 }
+.loading {
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 6;
+  background: #000000; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #434343,
+    #000000
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #434343,
+    #000000
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+.loading img {
+  height: 3rem;
+  width: 3rem;
+}
+@media only screen and (max-width: 600px) {
+  .settings-form{
+    width:18rem;
+  }
+  .settings-content{
+    width:80%;
+  }
+  .one-line h1 {
+  font-size: 1rem;
+  width: 50%;
+}
+}
+
 </style>

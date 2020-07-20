@@ -1,5 +1,6 @@
 <template>
-  <div v-if="user.name!==''" class="main">
+<div>
+  <div v-if="user" class="main">
     <h2>{{user.account}}'s Playlists</h2>
     <template v-if="user.playlists.length>0">
       <div class="songs">
@@ -15,6 +16,13 @@
       <h1>There are no playlists</h1>
     </div>
   </div>
+  <div v-else class="main">
+    <h2>You are not logged</h2>
+  </div>
+  <div v-if="!loaded" class="loading">
+      <img src="../assets/load.gif" />
+    </div>
+</div>
 </template>
 
 <script>
@@ -23,7 +31,8 @@ export default {
   name: "Playlists",
   data() {
     return {
-      user: null
+      user: null,
+      loaded: false
     };
   },
   created() {
@@ -48,34 +57,37 @@ export default {
               console.log(this.user);
             }
           }
+          this.loaded=true;
         });
     },
     deleteItem(id) {
       let tmp = this.user.playlists.slice();
       console.log(tmp);
-      for(let i=0; i<tmp.length; i++){
-        if(id === tmp[i].id){
-          tmp.splice(i,1);
+      for (let i = 0; i < tmp.length; i++) {
+        if (id === tmp[i].id) {
+          tmp.splice(i, 1);
           console.log(tmp);
         }
       }
       fetch(
-            "https://rocky-citadel-32862.herokuapp.com/MusicStreaming/users/" +
-              this.user.id,
-            {
-              method: "PUT",
-              body: JSON.stringify({
-                email: this.user.email,
-                account: this.user.account,
-                password: this.user.password,
-                playlists: tmp,
-                id: this.user.id
-              }),
-              headers: {
-                "Content-type": "application/json; charset=UTF-8"
-              }
-            }
-          ).then(()=>{this.fetchData()})
+        "https://rocky-citadel-32862.herokuapp.com/MusicStreaming/users/" +
+          this.user.id,
+        {
+          method: "PUT",
+          body: JSON.stringify({
+            email: this.user.email,
+            account: this.user.account,
+            password: this.user.password,
+            playlists: tmp,
+            id: this.user.id
+          }),
+          headers: {
+            "Content-type": "application/json; charset=UTF-8"
+          }
+        }
+      ).then(() => {
+        this.fetchData();
+      });
     }
   }
 };
@@ -143,5 +155,61 @@ export default {
 }
 .info h1 {
   font-size: 1.2rem;
+}
+.loading {
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 6;
+  background: #000000; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #434343,
+    #000000
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #434343,
+    #000000
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+.loading img {
+  height: 3rem;
+  width: 3rem;
+}
+@media only screen and (max-width: 1200px) {
+  .main h2{
+    font-size: 1.5rem;
+  }
+  .songs {
+    width: 30rem;
+  }
+  .song h1 {
+    font-size: 1.2rem;
+  }
+}
+@media only screen and (max-width: 700px) {
+  .songs {
+    width: 20rem;
+  }
+  .song h1 {
+    font-size: 1.0rem;
+  }
+}
+@media only screen and (max-width: 500px) {
+  .main h2{
+    font-size: 1.5rem;
+  }
+  .songs {
+    width: 13rem;
+  }
+  .song h1 {
+    font-size: 0.8rem;
+  }
 }
 </style>

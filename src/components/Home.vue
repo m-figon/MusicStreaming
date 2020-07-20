@@ -12,6 +12,9 @@
         <h2>Best quality of sound</h2>
       </div>
     </div>
+    <div v-if="!loaded" class="loading">
+      <img src="../assets/load.gif" />
+    </div>
   </div>
 </template>
 
@@ -19,7 +22,14 @@
 export default {
   name: "Home",
   data() {
-    return {};
+    return {
+      loaded: false
+    };
+  },
+  mounted: function() {
+    this.$nextTick(function() {
+      this.loaded = true;
+    });
   }
 };
 </script>
@@ -53,6 +63,32 @@ export default {
 }
 .ad h2 {
   font-size: 3rem;
+}
+.loading {
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 6;
+  background: #000000; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #434343,
+    #000000
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #434343,
+    #000000
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+.loading img {
+  height: 3rem;
+  width: 3rem;
 }
 @media only screen and (max-width: 950px) {
   .home {
