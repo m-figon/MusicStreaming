@@ -4,6 +4,7 @@
       <div class="details-song" v-if="index==idVal" v-bind:key="index">
         <h1>{{item.title}}</h1>
         <iframe v-bind:src="item.link"></iframe>
+        <VideoPlayer :options="videoOptions" />
       </div>
     </template>
     <div v-if="!loaded" class="loading">
@@ -13,13 +14,30 @@
 </template>
 
 <script>
+import VideoPlayer from "@/components/VideoPlayer.vue";
+
 export default {
   name: "Main",
+  components: {
+    VideoPlayer
+  },
   data() {
     return {
       musicArray: [],
       idVal: 0,
-      loaded: false
+      loaded: false,
+      videoOptions: {
+        autoplay: true,
+        controls: true,
+        sources: [
+          {
+            src: "https://www.youtube.com/embed/EP625xQIGzs",
+            type: "video/mp4",
+            height: 300,
+            width: 300
+          }
+        ]
+      }
     };
   },
   created() {

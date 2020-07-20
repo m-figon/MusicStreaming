@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="user" class="settings" >
+    <div v-if="user" class="settings">
       <div class="settings-form">
         <div class="settings-content">
           <div class="one-line">
@@ -19,11 +19,11 @@
           </div>
           <div class="one-line">
             <h1>Password</h1>
-            <input v-model="password" />
+            <input type="password" v-model="password" />
           </div>
           <div class="one-line">
             <h1>Confirm Password</h1>
-            <input v-model="password2" />
+            <input type="password" v-model="password2" />
           </div>
           <div class="button-line">
             <button v-on:click="changeData('password')">Change Password</button>
@@ -37,7 +37,6 @@
     <div v-if="!loaded" class="loading">
       <img src="../assets/load.gif" />
     </div>
-    
   </div>
 </template>
 
@@ -76,123 +75,91 @@ export default {
               this.email = this.user.email;
             }
           }
-          this.loaded=true;
+          this.loaded = true;
         });
     },
-    changeData(type) {
-      if (type === "account") {
-        let accountFlag = true;
-        if (!(this.account.match(/^[a-zA-Z0-9\.\-_]{4,10}$/) === null)) {
-          accountFlag = true;
+    ifCondition(type, value, condition, obj, alert1, alert2) {
+      if (type === value) {
+        let tmpFlag = true;
+        if (condition) {
+          tmpFlag = true;
         } else {
-          accountFlag = false;
+          tmpFlag = false;
         }
-        if (accountFlag) {
+        if (tmpFlag) {
           fetch(
             "https://rocky-citadel-32862.herokuapp.com/MusicStreaming/users/" +
               this.user.id,
             {
               method: "PUT",
-              body: JSON.stringify({
-                email: this.user.email,
-                account: this.account,
-                password: this.user.password,
-                playlists: this.user.playlists,
-                id: this.user.id
-              }),
+              body: JSON.stringify(obj),
               headers: {
                 "Content-type": "application/json; charset=UTF-8"
               }
             }
           ).then(() => {
             this.fetchData();
-            this.$store.commit("changeName", this.account);
-            alert("Account name changed");
+            alert(alert1);
           });
         } else {
-          alert("Account name should be 4-10 letters long");
+          alert(alert2);
         }
-      } else if (type === "email") {
-        let emailFlag = true;
-        if (
-          !(
+      }
+    },
+    changeData(type) {
+      this.ifCondition(
+        type,
+        "account",
+        !(this.account.match(/^[a-zA-Z0-9\.\-_]{4,10}$/) === null),
+        {
+          email: this.user.email,
+          account: this.account,
+          password: this.user.password,
+          playlists: this.user.playlists,
+          id: this.user.id
+        },
+        "Account name changed",
+        "Account name should be 4-10 letters long"
+      );
+      this.ifCondition(
+        type,
+        "email",
+        !(
             this.email.match(/^[a-z0-9\._\-]+@[a-z0-9\.\-]+\.[a-z]{2,4}$/) ===
             null
-          )
-        ) {
-          emailFlag = true;
-        } else {
-          emailFlag = false;
-        }
-        if (emailFlag) {
-          fetch(
-            "https://rocky-citadel-32862.herokuapp.com/MusicStreaming/users/" +
-              this.user.id,
-            {
-              method: "PUT",
-              body: JSON.stringify({
+          ),
+        {
                 email: this.email,
                 account: this.user.account,
                 password: this.user.password,
                 playlists: this.user.playlists,
                 id: this.user.id
-              }),
-              headers: {
-                "Content-type": "application/json; charset=UTF-8"
-              }
-            }
-          ).then(() => {
-            this.fetchData();
-            alert("Email Address Changed");
-          });
-        } else {
-          alert("Wrong email address");
-        }
-      } else if (type === "password") {
-        let passwordFlag = true;
-        if (
-          this.password === this.password2 &&
+              },
+        "Email Address Changed",
+        "Wrong email address"
+      );
+      this.ifCondition(
+        type,
+        "password",
+        this.password === this.password2 &&
           !(
             this.password.match(
               /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\.\-_@$!%*#?&])[A-Za-z\d\.\-_@$!%*#?&]{8,13}$/
             ) === null
-          )
-        ) {
-          passwordFlag = true;
-        } else {
-          passwordFlag = false;
-        }
-        if (passwordFlag) {
-          fetch(
-            "https://rocky-citadel-32862.herokuapp.com/MusicStreaming/users/" +
-              this.user.id,
-            {
-              method: "PUT",
-              body: JSON.stringify({
+          ),
+        {
                 email: this.user.email,
                 account: this.user.account,
                 password: this.password,
                 playlists: this.user.playlists,
                 id: this.user.id
-              }),
-              headers: {
-                "Content-type": "application/json; charset=UTF-8"
-              }
-            }
-          ).then(() => {
-            this.fetchData();
-            alert("Password changed");
-          });
-        } else {
-          alert(
-            "Password must be 8-13 signs long, consist of at least one uppercase, lowercase letter, a digit, special sign"
-          );
-        }
-      }
+              },
+        "Password changed",
+        "Password must be 8-13 signs long, consist of at least one uppercase, lowercase letter, a digit, special sign"
+      );
     }
   }
 };
 </script>
 <style scoped src="../style.css">
-
 </style>

@@ -23,6 +23,18 @@
         border-radius: 10px;
     }
   }
+  #changed{
+    background-color: #00ffff;
+    animation: rotation 1s linear;
+  }
+  @keyframes rotation {
+    from {
+            -webkit-transform: rotate(0deg);
+    }
+    to {
+            -webkit-transform: rotate(359deg);
+    }
+}
 .song {
     width: 100vw;
     border: 2px solid #0ff;

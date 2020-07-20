@@ -15,7 +15,7 @@
             <h1>Genre: {{item.type}}</h1>
           </router-link>
           <div v-if="logedAc!==''" class="button-div">
-            <button v-on:click="addToPlaylist(item.id)"></button>
+            <button v-on:click="addToPlaylist($event,item.id)"></button>
           </div>
         </div>
         <img v-bind:src="item.img" />
@@ -92,7 +92,7 @@ export default {
       this.startLength = (this.currentPage - 1) * 4;
       this.endLength = this.currentPage * 4;
     },
-    addToPlaylist(idNum) {
+    addToPlaylist(event,idNum) {
       fetch("https://rocky-citadel-32862.herokuapp.com/MusicStreaming/users")
         .then(response => response.json())
         .then(data => {
@@ -103,6 +103,7 @@ export default {
               let tmp = item.playlists.slice();
               tmp.push(this.musicArray[idNum]);
               console.log(tmp);
+              event.target.id="changed";
               fetch(
                 "https://rocky-citadel-32862.herokuapp.com/MusicStreaming/users/" +
                   item.id,

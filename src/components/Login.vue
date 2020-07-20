@@ -53,27 +53,26 @@ export default {
   },
   methods: {
     focusFunc(text, event, condition) {
-      if (text === "Account Name" && this.account === "Account Name") {
-        this.account = "";
-      }
-      else if (text === "Password" && this.password === "Password") {
-        this.password = "";
+      let texts = ["Account Name", "Password"];
+      let states = ["this.account", "this.password"];
+      for (let i = 0; i < texts.length; i++) {
+        if (text === texts[i] && eval(states[i] + "=== text")) {
+          eval(states[i] + " = ''");
+        }
       }
       if (condition) {
         this.type = "password";
       }
     },
     blurFunc(text, event, condition) {
-      if (text === "Account Name" && this.account === "") {
-        this.account = text;
-        if (condition) {
-          this.type = "text";
-        }
-      }
-      else if (text === "Password" && this.password === "") {
-        this.password = text;
-        if (condition) {
-          this.type = "text";
+      let texts = ["Account Name", "Password"];
+      let states = ["this.account", "this.password"];
+      for (let i = 0; i < texts.length; i++) {
+        if (text === texts[i] && eval(states[i] + "=== ''")) {
+          eval(states[i] + " = text");
+          if (condition) {
+            this.type = "text";
+          }
         }
       }
     },
