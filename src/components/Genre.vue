@@ -53,12 +53,9 @@ export default {
     };
   },
   created() {
-    // fetch the data when the view is created and the data is
-    // already being observed
     this.fetchData();
   },
   watch: {
-    // call again the method if the route changes
     $route: "fetchData"
   },
   methods: {
@@ -73,8 +70,6 @@ export default {
               this.musicArray.push(item);
             }
           }
-          console.log(this.musicArray);
-          console.log(this.type);
           setInterval(() => {
             this.logedAc = this.$store.state.user.logedUser;
           }, 1000);
@@ -90,12 +85,8 @@ export default {
         });
     },
     selectChange() {
-      console.log("select change");
-      console.log(this.currentPage);
       this.startLength = (this.currentPage - 1) * 4;
       this.endLength = this.currentPage * 4;
-      console.log(this.startLength);
-      console.log(this.endLength);
     },
     addToPlaylist(idNum) {
       fetch("https://rocky-citadel-32862.herokuapp.com/MusicStreaming/users")

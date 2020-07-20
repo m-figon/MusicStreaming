@@ -41,12 +41,9 @@ export default {
     };
   },
   created() {
-    // fetch the data when the view is created and the data is
-    // already being observed
     this.fetchData();
   },
   watch: {
-    // call again the method if the route changes
     $route: "fetchData"
   },
   mounted: function() {
@@ -59,7 +56,7 @@ export default {
       if (text === "Account Name" && this.account === "Account Name") {
         this.account = "";
       }
-      if (text === "Password" && this.password === "Password") {
+      else if (text === "Password" && this.password === "Password") {
         this.password = "";
       }
       if (condition) {
@@ -73,7 +70,7 @@ export default {
           this.type = "text";
         }
       }
-      if (text === "Password" && this.password === "") {
+      else if (text === "Password" && this.password === "") {
         this.password = text;
         if (condition) {
           this.type = "text";
@@ -88,16 +85,19 @@ export default {
           console.log(this.users);
         });
     },
+    valuesReset() {
+      this.loginShow = false;
+      this.account = "Account Name";
+      this.password = "Password";
+      this.type = "text";
+    },
     login() {
       let loginFlag = false;
       for (let item of this.users) {
         if (item.account === this.account && item.password === this.password) {
           this.$store.commit("changeName", this.account);
           loginFlag = true;
-          this.loginShow = false;
-          this.account = "Account Name";
-          this.password = "Password";
-          this.type = "text";
+          this.valuesReset();
           alert("you loged");
         }
       }
@@ -109,5 +109,4 @@ export default {
 };
 </script>
 <style scoped src="../style.css">
-
 </style>

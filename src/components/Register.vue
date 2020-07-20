@@ -55,7 +55,8 @@ export default {
       emailShow: false,
       passwordShow: false,
       password2Show: false,
-      loaded: false
+      loaded: false,
+      registerFlag: true
     };
   },
   mounted: function() {
@@ -65,103 +66,99 @@ export default {
   },
   methods: {
     focusFunc(text, event, condition) {
-      if (text === "Account Name" && this.account === "Account Name") {
-        this.account = "";
-      }
-      if (text === "Password" && this.password === "Password") {
-        this.password = "";
-      }
-      if (
-        text === "Confirm Password" &&
-        this.password2 === "Confirm Password"
-      ) {
-        this.password2 = "";
-      }
-      if (text === "Email Address" && this.email === "Email Address") {
-        this.email = "";
+      let texts = [
+        "Account Name",
+        "Password",
+        "Confirm Password",
+        "Email Address"
+      ];
+      let states = [
+        "this.account",
+        "this.password",
+        "this.password2",
+        "this.email"
+      ];
+      for (let i = 0; i < texts.length; i++) {
+        if (text === texts[i] && eval(states[i] + "=== text")) {
+          eval(states[i] + " = ''");
+        }
       }
       if (condition === 1) {
         this.type = "password";
-      }
-      if (condition === 2) {
+      } else if (condition === 2) {
         this.type2 = "password";
       }
     },
-    bluring(condition){
+    bluring(condition) {
       if (condition === 1) {
-          this.type = "text";
-        }
-        if (condition === 2) {
-          this.type2 = "text";
-        }
+        this.type = "text";
+      } else if (condition === 2) {
+        this.type2 = "text";
+      }
     },
     blurFunc(text, event, condition) {
-      if (text === "Account Name" && this.account === "") {
-        this.account = text;
-        this.bluring(condition);
+      let texts = [
+        "Account Name",
+        "Password",
+        "Confirm Password",
+        "Email Address"
+      ];
+      let states = [
+        "this.account",
+        "this.password",
+        "this.password2",
+        "this.email"
+      ];
+      for (let i = 0; i < texts.length; i++) {
+        if (text === texts[i] && eval(states[i] + "=== ''")) {
+          eval(states[i] + " = text");
+          this.bluring(condition);
+        }
       }
-      if (text === "Password" && this.password === "") {
-        this.password = text;
-        this.bluring(condition);
-      }
-      if (text === "Confirm Password" && this.password2 === "") {
-        this.password2 = text;
-        this.bluring(condition);
-      }
-      if (text === "Email Address" && this.email === "") {
-        this.email = text;
-        this.bluring(condition);
+    },
+    valuesReset() {
+      this.account = "Account Name";
+      this.email = "Email Address";
+      this.password = "Password";
+      this.password2 = "Confirm Password";
+      this.type = "text";
+      this.type2 = "text";
+    },
+    ifCheck(condition) {
+      if (condition) {
+        return false;
+      } else {
+        this.registerFlag = false;
+        return true;
       }
     },
     register() {
-      let registerFlag = true;
-      if (
+      this.registerFlag = true;
+      this.emailShow = this.ifCheck(
         !(
           this.email.match(/^[a-z0-9\._\-]+@[a-z0-9\.\-]+\.[a-z]{2,4}$/) ===
           null
         )
-      ) {
-        console.log("email correct");
-        this.emailShow = false;
-      } else {
-        this.emailShow = true;
-        registerFlag = false;
-      }
-      if (!(this.account.match(/^[a-zA-Z0-9\.\-_]{4,10}$/) === null)) {
-        console.log("account correct");
-        this.accountShow = false;
-      } else {
-        this.accountShow = true;
-        registerFlag = false;
-      }
-      if (
+      );
+      this.accountShow = this.ifCheck(
+        !(this.account.match(/^[a-zA-Z0-9\.\-_]{4,10}$/) === null)
+      );
+      this.passwordShow = this.ifCheck(
         !(
           this.password.match(
             /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\.\-_@$!%*#?&])[A-Za-z\d\.\-_@$!%*#?&]{8,13}$/
           ) === null
         )
-      ) {
-        console.log("password correct");
-        this.passwordShow = false;
-      } else {
-        this.passwordShow = true;
-        registerFlag = false;
-      }
-      if (
+      );
+      this.password2Show = this.ifCheck(
         this.password === this.password2 &&
-        !(
-          this.password.match(
-            /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\.\-_@$!%*#?&])[A-Za-z\d\.\-_@$!%*#?&]{8,13}$/
-          ) === null
-        )
-      ) {
-        console.log("password2 correct");
-        this.password2Show = false;
-      } else {
-        this.password2Show = true;
-        registerFlag = false;
-      }
-      if (registerFlag) {
+          !(
+            this.password.match(
+              /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\.\-_@$!%*#?&])[A-Za-z\d\.\-_@$!%*#?&]{8,13}$/
+            ) === null
+          )
+      );
+      if (this.registerFlag) {
         fetch(
           "https://rocky-citadel-32862.herokuapp.com/MusicStreaming/users",
           {
@@ -177,12 +174,7 @@ export default {
             }
           }
         );
-        this.account = "Account Name";
-        this.email = "Email Address";
-        this.password = "Password";
-        this.password2 = "Confirm Password";
-        this.type = "text";
-        this.type2 = "text";
+        this.valuesReset();
         alert("New user created");
       }
     }
@@ -190,5 +182,4 @@ export default {
 };
 </script>
 <style scoped src="../style.css">
-
 </style>

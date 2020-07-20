@@ -23,13 +23,10 @@ export default {
     };
   },
   created() {
-    // fetch the data when the view is created and the data is
-    // already being observed
     this.getId();
     this.fetchData();
   },
   watch: {
-    // call again the method if the route changes
     $route: "fetchData"
   },
   beforeUpdate: function() {
