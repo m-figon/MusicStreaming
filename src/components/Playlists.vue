@@ -1,10 +1,10 @@
 <template>
 <div>
-  <div v-if="user" class="main">
+  <div v-if="user" class="playlists">
     <h2>{{user.account}}'s Playlists</h2>
     <template v-if="user.playlists.length>0">
-      <div class="songs">
-        <div class="song" v-for="(item,index) of user.playlists">
+      <div class="playlists-songs">
+        <div class="playlists-song" v-for="(item,index) of user.playlists">
           <router-link v-bind:to="`/details/${item.id}`">
             <h1 v-bind:key="index">{{item.title}}</h1>
           </router-link>
@@ -16,7 +16,7 @@
       <h1>There are no playlists</h1>
     </div>
   </div>
-  <div v-else class="main">
+  <div v-else class="playlists">
     <h2>You are not logged</h2>
   </div>
   <div v-if="!loaded" class="loading">
@@ -92,124 +92,6 @@ export default {
   }
 };
 </script>
-<style scoped>
-.main {
-  width: 100vw;
-  height: calc(100vh - 5rem);
-  background: #000000; /* fallback for old browsers */
-  background: -webkit-linear-gradient(
-    to right,
-    #434343,
-    #000000
-  ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(
-    to right,
-    #434343,
-    #000000
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  display: flex;
-  justify-content: flex-start;
-  flex-direction: column;
-  align-items: center;
-  color: white;
-}
-.song {
-  display: flex;
-}
-.song button {
-  clip-path: polygon(
-    20% 0%,
-    0% 20%,
-    30% 50%,
-    0% 80%,
-    20% 100%,
-    50% 70%,
-    80% 100%,
-    100% 80%,
-    70% 50%,
-    100% 20%,
-    80% 0%,
-    50% 30%
-  );
+<style scoped src="../style.css">
 
-  background-color: red;
-  border: 0;
-  width: 1rem;
-  height: 1rem;
-}
-.song button:hover {
-  cursor: pointer;
-}
-.songs {
-  padding: 1rem 1rem;
-  width: 60rem;
-  border: 2px solid white;
-  border-radius: 10px;
-}
-.songs h1:hover {
-  color: #0ff;
-  cursor: pointer;
-}
-.main h2 {
-  font-size: 2rem;
-}
-.info h1 {
-  font-size: 1.2rem;
-}
-.loading {
-  width: 100vw;
-  height: 100vh;
-  top: 0;
-  left: 0;
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 6;
-  background: #000000; /* fallback for old browsers */
-  background: -webkit-linear-gradient(
-    to right,
-    #434343,
-    #000000
-  ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(
-    to right,
-    #434343,
-    #000000
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-}
-.loading img {
-  height: 3rem;
-  width: 3rem;
-}
-@media only screen and (max-width: 1200px) {
-  .main h2{
-    font-size: 1.5rem;
-  }
-  .songs {
-    width: 30rem;
-  }
-  .song h1 {
-    font-size: 1.2rem;
-  }
-}
-@media only screen and (max-width: 700px) {
-  .songs {
-    width: 20rem;
-  }
-  .song h1 {
-    font-size: 1.0rem;
-  }
-}
-@media only screen and (max-width: 500px) {
-  .main h2{
-    font-size: 1.5rem;
-  }
-  .songs {
-    width: 13rem;
-  }
-  .song h1 {
-    font-size: 0.8rem;
-  }
-}
 </style>

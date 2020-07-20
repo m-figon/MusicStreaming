@@ -1,0 +1,57 @@
+@import '../main.scss';
+
+.home {
+    width: 100vw;
+    height: calc(100vh - 5rem);
+    background: url("./assets/background.jpg");
+    background-size: 100% 100%;
+    @include flex();
+  }
+  .home2 {
+    width: 100vw;
+    height: calc(100vh - 5rem);
+    background: url("./assets/background3.jpg");
+    background-size: 100% 100%;
+    @include flex();
+    display: none;
+  }
+  .ad {
+    width: 40rem;
+    height: 17rem;
+    background-color: rgba(0, 0, 0, 0.637);
+    border-radius: 10px;
+    color: white;
+    padding: 1rem 3rem;
+    h2 {
+        font-size: 3rem;
+      }
+  }
+  @media only screen and (max-width: 950px) {
+    .home {
+      display: none;
+    }
+    .home2 {
+      display: flex;
+    }
+    .ad {
+      width: 20rem;
+      height: 13rem;
+      background-color: rgba(0, 0, 0, 0.637);
+      h2 {
+        font-size: 2rem;
+      }
+    }
+    
+  }
+  @media only screen and (max-width: 550px) {
+    .ad {
+      width: 12rem;
+      height: 11rem;
+      background-color: rgba(0, 0, 0, 0.637);
+      padding: 1rem 1.5rem;
+      h2 {
+        font-size: 1.5rem;
+      }
+    }
+    
+  }

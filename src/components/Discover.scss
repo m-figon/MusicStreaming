@@ -1,0 +1,68 @@
+@import '../main.scss';
+
+.discover {
+    width: 100vw;
+    height: calc(100vh - 5rem);
+    @include background();
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .discover-genres {
+    display: grid;
+    grid-template-columns: auto auto auto;
+  }
+  .discover-genre {
+    width: 20rem;
+    height: 15rem;
+    margin: 2rem 2rem;
+    border: 2px solid white;
+    border-radius: 10px;
+    @include flex(flex,center,center,column);
+    overflow: hidden;
+    h1 {
+        font-size: 2rem;
+        color: white;
+        margin: 0.2rem 0;
+      }
+    img {
+        width: 100%;
+      }
+  }
+  @media only screen and (max-width: 1300px) {
+    .discover-genre {
+      width: 15rem;
+      height: 12rem;
+      h1 {
+        font-size: 1.2rem;
+      }
+    }
+  }
+  @media only screen and (max-width: 1000px) {
+    .discover-genre {
+      width: 12rem;
+      height: 10rem;
+    }
+  }
+  @media only screen and (max-width: 800px) {
+    .discover-genres {
+      grid-template-columns: auto auto;
+    }
+    .discover-genre {
+      width: 10rem;
+      height: 7rem;
+      margin: 0.5rem 0.5rem;
+      h1 {
+        font-size: 1rem;
+      }
+    }
+  }
+  @media only screen and (max-width: 450px) {
+    .discover-genre {
+      width: 8rem;
+      height: 6rem;
+      h1 {
+        font-size: 0.8rem;
+      }
+    }
+  }
