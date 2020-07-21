@@ -33,4 +33,9 @@ export default {
         }
     }
 }
+
 </script>
+<style  src="../../node_modules/video.js/dist/video-js.css">
+</style>
+<style scoped src="../../node_modules/video.js/dist/video-js.css">
+</style>

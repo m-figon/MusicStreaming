@@ -1,10 +1,9 @@
 <template>
-  <div class="main">
+  <div class="details">
     <template v-for="(item,index) of musicArray">
       <div class="details-song" v-if="index==idVal" v-bind:key="index">
         <h1>{{item.title}}</h1>
-        <iframe v-bind:src="item.link"></iframe>
-        <VideoPlayer :options="videoOptions" />
+        <videoplayer :options="videoOptions" />
       </div>
     </template>
     <div v-if="!loaded" class="loading">
@@ -19,29 +18,17 @@ import VideoPlayer from "@/components/VideoPlayer.vue";
 export default {
   name: "Main",
   components: {
-    VideoPlayer
+    videoplayer: VideoPlayer
   },
   data() {
     return {
       musicArray: [],
       idVal: 0,
       loaded: false,
-      videoOptions: {
-        autoplay: true,
-        controls: true,
-        sources: [
-          {
-            src: "https://www.youtube.com/embed/EP625xQIGzs",
-            type: "video/mp4",
-            height: 300,
-            width: 300
-          }
-        ]
-      }
+      videoOptions: null
     };
   },
   created() {
-    this.getId();
     this.fetchData();
   },
   watch: {
@@ -59,6 +46,18 @@ export default {
         .then(data => {
           this.musicArray = data.slice();
           console.log(this.musicArray);
+          this.getId();
+          console.log(this.musicArray[this.idVal].link);
+          this.videoOptions = {
+            autoplay: true,
+            controls: true,
+            sources: [
+              {
+                src: this.musicArray[this.idVal].link,
+                type: "video/mp4"
+              }
+            ]
+          };
         });
     },
     getId() {
@@ -68,5 +67,7 @@ export default {
   }
 };
 </script>
+<style  src="../style.css">
+</style>
 <style scoped src="../style.css">
 </style>

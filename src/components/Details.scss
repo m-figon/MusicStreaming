@@ -5,9 +5,24 @@
     width: 50rem;
     height: 35rem;
   }
+  .details {
+    width: 100vw;
+    height: calc(100vh - 5rem);
+    @include background();
+    @include flex(flex,flex-start,center,column);
+    color: white;
+    input {
+        background: black; /* fallback for old browsers */
+        border: 1px solid white;
+        padding: 0 0.5rem;
+        margin: 0.5rem 0;
+        color: white;
+        border-radius: 10px;
+    }
+  }
   .details-song {
     width: auto;
-    height: calc(100vh - 5rem);
+    height: auto;
     padding: 0rem 1rem;
     padding-bottom: 1rem;
     border: 2px solid #0ff;
@@ -32,6 +47,13 @@
       height: 23rem;
     }
   }
+  @media only screen and (max-width: 800px) {
+
+  .vjs_video_3-dimensions {
+    width:400px;
+    height:250px;
+  }
+}
   @media only screen and (max-width: 700px) {
     .details-song h1 {
       font-size: 1.2rem;
@@ -39,6 +61,13 @@
     iframe {
       width: 25rem;
       height: 15rem;
+    }
+  }
+  @media only screen and (max-width: 550px) {
+
+    .vjs_video_3-dimensions {
+      width:250px;
+      height:150px;
     }
   }
   @media only screen and (max-width: 500px) {
