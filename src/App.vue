@@ -14,8 +14,8 @@
         <router-link to="/discover">
           <h1 v-bind:id="discoverId">Discover</h1>
         </router-link>
-        <router-link to="/playlists">
-          <h1 v-if="logedAc!==''" v-bind:id="playlistId">Playlists</h1>
+        <router-link to="/playlist">
+          <h1 v-if="logedAc!==''" v-bind:id="playlistId">Playlist</h1>
         </router-link>
       </div>
       <div class="middle"></div>
@@ -84,7 +84,7 @@ export default {
       } else if (this.$route.path === "/register") {
         this.idEmpty();
         this.registerId = "other";
-      } else if (this.$route.path === "/playlists") {
+      } else if (this.$route.path === "/playlist") {
         this.idEmpty();
         this.playlistId = "other";
       } else if (this.$route.path === "/settings") {

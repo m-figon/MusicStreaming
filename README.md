@@ -1,21 +1,25 @@
-# music-streaming
+# WebForum
 
-> A Vue.js project
+Goal of this project was creating a music streaming website which allows user to search for song, choose it, listen to it or add it to playlist when user is logged. User can also change account settings.
 
-## Build Setup
+To sign in use account 'testUser' and password: 'Test.123' (login allows to add song to playlist, change account data)
 
-``` bash
-# install dependencies
-npm install
+## Used frameworks, languages
 
-# serve with hot reload at localhost:8080
-npm run dev
+* Vue
 
-# build for production with minification
-npm run build
+* JavaScript
 
-# build for production and view the bundle analyzer report
-npm run build --report
-```
+* HTML & CSS
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+* Sass
+
+* VueYoutube
+
+## Netlify app link
+
+https://music-streaming-mfigon.netlify.app
+
+## Netlify portfolio link
+
+https://portfolio-mfigon.netlify.app

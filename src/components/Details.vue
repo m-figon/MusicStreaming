@@ -1,9 +1,15 @@
 <template>
-  <div class="details">
+  <div class="details" ref="details">
     <template v-for="(item,index) of musicArray">
-      <div class="details-song" v-if="index==idVal" v-bind:key="index">
+      <div class="details-song" ref="detailsSong" v-if="index==idVal" v-bind:key="index">
         <h1>{{item.title}}</h1>
-        <videoplayer :options="videoOptions" />
+        <youtube
+          :video-id="videoId"
+          ref="youtube"
+          @paused="paused"
+          @playing="playing"
+          @ended="paused"
+        ></youtube>
       </div>
     </template>
     <div v-if="!loaded" class="loading">
@@ -13,19 +19,15 @@
 </template>
 
 <script>
-import VideoPlayer from "@/components/VideoPlayer.vue";
-
 export default {
-  name: "Main",
-  components: {
-    videoplayer: VideoPlayer
-  },
+  name: "Details",
+  components: {},
   data() {
     return {
       musicArray: [],
       idVal: 0,
       loaded: false,
-      videoOptions: null
+      videoId: null
     };
   },
   created() {
@@ -48,21 +50,33 @@ export default {
           console.log(this.musicArray);
           this.getId();
           console.log(this.musicArray[this.idVal].link);
-          this.videoOptions = {
-            autoplay: true,
-            controls: true,
-            sources: [
-              {
-                src: this.musicArray[this.idVal].link,
-                type: "video/mp4"
-              }
-            ]
-          };
+          this.videoId = this.musicArray[this.idVal].link;
         });
     },
     getId() {
       this.idVal = this.$route.params.id;
       console.log(this.idVal);
+    },
+    playing() {
+      console.log(this.$refs.detailsSong[0].style);
+      this.$refs.detailsSong[0].style.border = "2px solid #0ff";
+      this.$refs.details.style.background =
+        "url(" + this.musicArray[this.idVal].img + ")";
+      this.$refs.details.style.backgroundSize =
+        "100% 100%";
+    },
+    paused() {
+      console.log(this.$refs.detailsSong[0].style);
+      this.$refs.detailsSong[0].style.border = "2px solid white";
+      this.$refs.details.style.background =
+        "";
+      this.$refs.details.style.backgroundSize =
+        "";
+    }
+  },
+  computed: {
+    player() {
+      return this.$refs.youtube.player;
     }
   }
 };

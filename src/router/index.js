@@ -7,7 +7,7 @@ import Login from '@/components/Login'
 import Register from '@/components/Register'
 import Details from '@/components/Details'
 import Genre from '@/components/Genre'
-import Playlists from '@/components/Playlists'
+import Playlist from '@/components/Playlist'
 import Settings from '@/components/Settings'
 
 Vue.use(Router)
@@ -53,9 +53,9 @@ export default new Router({
       component: Details
     },
     {
-      path: '/playlists',
-      name: 'Playlists',
-      component: Playlists
+      path: '/playlist',
+      name: 'Playlist',
+      component: Playlist
     },
     {
       path: '/settings',

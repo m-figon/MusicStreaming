@@ -13,6 +13,8 @@
     "videojs-youtube": "^2.6.1",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
+    "vue-video-player": "^5.0.2",
+    "vue-youtube": "^1.4.0",
     "vuex": "^3.5.1"
   },
   "devDependencies": {

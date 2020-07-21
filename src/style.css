@@ -33,7 +33,7 @@ iframe {
   height: auto;
   padding: 0rem 1rem;
   padding-bottom: 1rem;
-  border: 2px solid #0ff;
+  border: 2px solid white;
   border-radius: 10px;
   display: flex;
   justify-content: flex-start;
@@ -48,6 +48,10 @@ iframe {
 .details-song h1 {
   font-size: 2rem;
   margin: 2rem 0;
+}
+
+#playing {
+  border: 2px solid #0ff;
 }
 
 @media only screen and (max-width: 1050px) {
@@ -132,7 +136,7 @@ iframe {
   width: 100%;
 }
 
-@media only screen and (max-width: 1300px) {
+@media only screen and (max-width: 1400px) {
   .discover-genre {
     width: 15rem;
     height: 12rem;
@@ -141,7 +145,7 @@ iframe {
     font-size: 1.2rem;
   }
 }
-@media only screen and (max-width: 1000px) {
+@media only screen and (max-width: 1100px) {
   .discover-genre {
     width: 12rem;
     height: 10rem;

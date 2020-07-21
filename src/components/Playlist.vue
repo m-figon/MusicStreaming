@@ -1,7 +1,7 @@
 <template>
 <div>
   <div v-if="user" class="playlists">
-    <h2>{{user.account}}'s Playlists</h2>
+    <h2>{{user.account}}'s Playlist</h2>
     <template v-if="user.playlists.length>0">
       <div class="playlists-songs">
         <div class="playlists-song" v-for="(item,index) of user.playlists">
@@ -13,7 +13,7 @@
       </div>
     </template>
     <div v-if="user.playlists.length<=0" class="info">
-      <h1>There are no playlists</h1>
+      <h1>There are no songs in a playlist</h1>
     </div>
   </div>
   <div v-else class="playlists">
@@ -28,7 +28,7 @@
 <script>
 import store from "../store";
 export default {
-  name: "Playlists",
+  name: "Playlist",
   data() {
     return {
       user: null,
