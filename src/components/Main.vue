@@ -7,9 +7,9 @@
         v-if="(index<endLength && index>=startLength && searchVal==='') || ((item.title.toLowerCase().includes(searchVal.toLowerCase())) && searchVal!=='')"
         v-bind:key="index"
       >
-        <div class="text">
+        <div class="left-part">
           <router-link :to="`/details/${index}`">
-            <h1>Title: {{item.title}}</h1>
+            <h1>{{item.title}}</h1>
           </router-link>
           <router-link :to="{ path: `/discover/${item.type}`, params: {type: item.type } }">
             <h1>Genre: {{item.type}}</h1>
@@ -18,7 +18,9 @@
             <button v-on:click="addToPlaylist($event,item.id)"></button>
           </div>
         </div>
+        <div class="right-part">
         <img v-bind:src="item.img" />
+        </div>
       </div>
     </template>
     <div class="pages">
