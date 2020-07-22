@@ -8,15 +8,15 @@
         v-bind:key="index"
       >
         <div class="left-part">
-          <router-link :to="`/details/${index}`">
+          <div v-if="logedAc!==''" class="button-div">
+            <button v-on:click="addToPlaylist($event,item.id)"></button>
+          </div>
+          <router-link :to="`/details/${item.id}`">
             <h1>{{item.title}}</h1>
           </router-link>
           <router-link :to="{ path: `/discover/${item.type}`, params: {type: item.type } }">
             <h1>Genre: {{item.type}}</h1>
           </router-link>
-          <div v-if="logedAc!==''" class="button-div">
-            <button v-on:click="addToPlaylist($event,item.id)"></button>
-          </div>
         </div>
         <div class="right-part">
         <img v-bind:src="item.img" />

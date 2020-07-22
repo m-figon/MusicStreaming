@@ -183,10 +183,10 @@ a {
     margin: 0 0.3rem;
   }
 }
-@media only screen and (max-width: 700px) {
+@media only screen and (max-width: 600px) {
 
   .nav-bar h1 {
-    font-size: 0.7rem;
+    font-size:1rem;
     margin: 0 0.2rem;
   }
   .left,.right{
@@ -199,8 +199,18 @@ a {
     display: block;
   }
   .nav-bar h2 {
-    font-size: 0.9rem;
+    font-size: 1rem;
     margin: 0 0.2rem;
+  }
+}
+@media only screen and (max-width: 450px) {
+  .nav-bar h1,.nav-bar h2 {
+    font-size: 0.8rem;
+  }
+}
+@media only screen and (max-width: 400px) {
+  .nav-bar h1,.nav-bar h2 {
+    font-size: 0.7rem;
   }
 }
 </style>
